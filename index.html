@@ -1,13 +1,83 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="src/style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Emfy test task</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
+    <div id="app">
+      <h1 class="title">Emfy test task</h1>
+      <table class="table">
+        <thead class="tableHeader">
+          <tr class="tableRow">
+            <th class="tableHeading">Название</th>
+            <th class="tableHeading">Бюджет</th>
+            <th class="tableHeading">ID</th>
+          </tr>
+        </thead>
+        <tbody class="tableBody">
+          <tr class="dealRow">
+            <td class="dealData dealName">sds</td>
+            <td class="dealData dealBudget">sds</td>
+            <td class="dealData dealId">sds</td>
+          </tr>
+          <tr class="taskRow">
+            <td class="taskDetails" colspan="3">
+              <div class="taskContent">
+                <div class="taskLeft">
+                  <p class="taskText">
+                    Название: <span class="taskName"></span>
+                  </p>
+                  <p class="taskText">ID: <span class="taskId"></span></p>
+                </div>
+                <div class="taskRight">
+                  <p class="taskText">Дата: <span class="taskDate"></span></p>
+                  <p class="taskText">
+                    Статус:
+                    <svg class="taskStatus"></svg>
+                  </p>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="dealRow">
+            <td class="dealData dealName">sds</td>
+            <td class="dealData dealBudget">sds</td>
+            <td class="dealData dealId">sds</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <template id="dealTemplate">
+      <tr class="dealRow">
+        <td class="dealName"></td>
+        <td class="dealBudget"></td>
+        <td class="dealId"></td>
+      </tr>
+    </template>
+
+    <template id="taskTemplate">
+      <tr class="taskRow">
+        <td class="taskDetails" colspan="3">
+          <div class="taskContent">
+            <div class="taskLeft">
+              <p>Название: <span class="taskName"></span></p>
+              <p>ID: <span class="taskId"></span></p>
+            </div>
+            <div class="taskRight">
+              <p>Дата: <span class="taskDate"></span></p>
+              <p>
+                Статус:
+                <svg class="taskStatus"></svg>
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </template>
+    <!-- <script type="module" src="/src/main.ts"></script> -->
   </body>
 </html>
