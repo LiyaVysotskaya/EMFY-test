@@ -40,6 +40,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   loader.classList.add("hidden");
   dealsTable.classList.remove("hidden");
 
+  let currentRow: HTMLTableRowElement | null = null;
+  let originalDealRow: HTMLElement | null = null;
+
   deals.forEach((deal: TDeal) => {
     const dealRow = document.importNode(dealTemplate.content, true);
 
@@ -51,52 +54,62 @@ document.addEventListener("DOMContentLoaded", async () => {
     budget.textContent = deal.price.toString();
     id.textContent = deal.id.toString();
 
-    dealRow
-      .querySelector(".dealRow")
-      ?.addEventListener("click", async (event) => {
-        const currentRow = (event.currentTarget as HTMLElement).closest("tr");
+    const rowElement = dealRow.querySelector(".dealRow") as HTMLTableRowElement;
 
-        const loaderRow = document.createElement("tr");
-        loaderRow.classList.add("loaderRow");
-        loaderRow.innerHTML = `
-          <td class="dataLoader" colspan="3">
-            <div class="loader">
-              <svg
-                viewBox="0 0 1024 1024"
-                focusable="false"
-                width="2em"
-                height="2em"
-                fill="#1677ff"
-                aria-hidden="true"
-              >
-                <path
-                  d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z"
-                ></path>
-              </svg>
-            </div>
-          </td>
-        `;
+    rowElement?.addEventListener("click", async (event) => {
+      const clickedRow = (event.currentTarget as HTMLTableRowElement).closest(
+        "tr"
+      );
 
-        if (currentRow) {
-          tableBody.replaceChild(loaderRow, currentRow);
-        }
+      if (currentRow && originalDealRow) {
+        tableBody.replaceChild(originalDealRow, currentRow);
+      }
 
-        const response: TDeal = await getDealById(deal.id.toString());
-        console.log(response);
+      originalDealRow = clickedRow!.cloneNode(true) as HTMLElement;
 
-        const taskRow = document.importNode(taskTemplate.content, true);
-        const taskName = taskRow.querySelector(".taskName") as HTMLElement;
-        const taskId = taskRow.querySelector(".taskId") as HTMLElement;
-        const taskDate = taskRow.querySelector(".taskDate") as HTMLElement;
-        const taskStatus = taskRow.querySelector(".taskStatus") as HTMLElement;
+      const loaderRow = document.createElement("tr");
+      loaderRow.classList.add("loaderRow");
+      loaderRow.innerHTML = `
+        <td class="dataLoader" colspan="3">
+          <div class="loader">
+            <svg
+              viewBox="0 0 1024 1024"
+              focusable="false"
+              width="2em"
+              height="2em"
+              fill="#1677ff"
+              aria-hidden="true"
+            >
+              <path
+                d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z"
+              ></path>
+            </svg>
+          </div>
+        </td>
+      `;
 
-        taskName.textContent = response.name;
-        taskId.textContent = response.id.toString();
-        taskDate.textContent = response.created_at.toString();
-        taskStatus.textContent = response.status_id.toString();
+      clickedRow?.replaceWith(loaderRow);
 
-        tableBody.replaceChild(taskRow, loaderRow);
-      });
+      currentRow = loaderRow;
+
+      const response: TDeal = await getDealById(deal.id.toString());
+
+      const taskRow = document.importNode(taskTemplate.content, true)
+        .firstElementChild as HTMLTableRowElement;
+      const taskName = taskRow.querySelector(".taskName") as HTMLElement;
+      const taskId = taskRow.querySelector(".taskId") as HTMLElement;
+      const taskDate = taskRow.querySelector(".taskDate") as HTMLElement;
+      const taskStatus = taskRow.querySelector(".taskStatus") as HTMLElement;
+
+      taskName.textContent = response.name;
+      taskId.textContent = response.id.toString();
+      taskDate.textContent = response.created_at.toString();
+      taskStatus.textContent = response.status_id.toString();
+
+      loaderRow.replaceWith(taskRow);
+
+      currentRow = taskRow;
+    });
 
     tableBody.appendChild(dealRow);
   });
