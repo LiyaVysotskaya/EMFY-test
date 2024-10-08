@@ -2,6 +2,7 @@ import { getDealById, getDeals } from "./api/api.ts";
 import "./style.css";
 import { TDeal, TGeneralResponse } from "./types/apiTypes.ts";
 import { DEALS_LIMIT, DEALS_REQUEST_TIMEOUT } from "./utils/constants.ts";
+import { formatDate } from "./utils/converDateHelper.ts";
 
 const fetchDeals = async () => {
   const deals: TDeal[] = [];
@@ -101,9 +102,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       const taskDate = taskRow.querySelector(".taskDate") as HTMLElement;
       const taskStatus = taskRow.querySelector(".taskStatus") as HTMLElement;
 
+      const date = formatDate(response.closest_task_at!).toString();
+
       taskName.textContent = response.name;
       taskId.textContent = response.id.toString();
-      taskDate.textContent = response.created_at.toString();
+      taskDate.textContent = date;
       taskStatus.textContent = response.status_id.toString();
 
       loaderRow.replaceWith(taskRow);
