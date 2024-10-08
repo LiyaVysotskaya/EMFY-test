@@ -56,7 +56,8 @@ body {
 
 .tableHeader,
 .tableBody,
-.taskRow {
+.taskRow,
+.loaderRow {
   text-align: start;
 
   border-collapse: separate;
@@ -127,12 +128,15 @@ body {
 }
 
 .loader {
+  margin: 20px auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .loader svg {
+  display: block;
+  margin: 0 auto;
   animation: spin 2s linear infinite;
 }
 

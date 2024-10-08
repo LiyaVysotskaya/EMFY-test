@@ -13,3 +13,16 @@ export const getDeals = async (limit: number, page: number) => {
 
   return response.data;
 };
+
+export const getDealById = async (id: string) => {
+  const response = await axios.get(
+    `${PROXY}${BASE_URL}${API_VERSION}/leads/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+      },
+    }
+  );
+
+  return response.data;
+};
