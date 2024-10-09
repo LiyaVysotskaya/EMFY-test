@@ -6,8 +6,6 @@ export const getStatusColor = (timestamp: number | null): string => {
       (timestamp * 1000 - today.getTime()) / (1000 * 60 * 60 * 24)
     );
 
-    console.log(diffInDays);
-
     if (diffInDays < 0) {
       return "red";
     } else if (diffInDays === 0) {
