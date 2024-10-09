@@ -27,6 +27,13 @@ const fetchDeals = async () => {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
+  const loaderTemplate = document.getElementById(
+    "loaderTemplate"
+  ) as HTMLTemplateElement;
+  const loaderFragment = document.importNode(loaderTemplate.content, true);
+  const app = document.getElementById("app")!;
+  app.appendChild(loaderFragment);
+
   const loader = document.getElementById("loader")!;
   const dealsTable = document.getElementById("dealsTable")!;
   const tableBody = dealsTable.getElementsByClassName("tableBody")[0];
@@ -56,30 +63,27 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     originalDealRow = clickedRow.cloneNode(true) as HTMLElement;
 
-    const loaderRow = document.createElement("tr");
-    loaderRow.classList.add("loaderRow");
-    loaderRow.innerHTML = `
-      <td class="dataLoader" colspan="3">
-        <div class="loader">
-          <svg
-            viewBox="0 0 1024 1024"
-            focusable="false"
-            width="2em"
-            height="2em"
-            fill="#1677ff"
-            aria-hidden="true"
-          >
-            <path
-              d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z"
-            ></path>
-          </svg>
-        </div>
-      </td>
-    `;
+    const detailsRow = document.createElement("tr");
+    const detailsColumn = document.createElement("td");
+    detailsColumn.colSpan = 3;
 
-    clickedRow.replaceWith(loaderRow);
+    detailsRow.classList.add("loaderRow");
+    detailsColumn.classList.add("dataLoader");
 
-    currentRow = loaderRow;
+    const loaderFragment = document.importNode(loaderTemplate.content, true);
+    const svgElement = loaderFragment.querySelector("svg");
+
+    if (svgElement) {
+      svgElement.setAttribute("width", "2em");
+      svgElement.setAttribute("height", "2em");
+    }
+
+    detailsColumn.appendChild(loaderFragment);
+    detailsRow.appendChild(detailsColumn);
+
+    clickedRow.replaceWith(detailsRow);
+
+    currentRow = detailsRow;
 
     const dealId = clickedRow.querySelector(".dealId")?.textContent;
     const response: TDeal = await getDealById(dealId!.toString());
@@ -99,7 +103,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     taskDate.textContent = getDateAsString(response.closest_task_at);
     taskStatusCircle.style.fill = getStatusColor(response.closest_task_at);
 
-    loaderRow.replaceWith(taskRow);
+    detailsRow.replaceWith(taskRow);
 
     currentRow = taskRow;
   });
