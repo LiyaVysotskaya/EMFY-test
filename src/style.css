@@ -56,7 +56,8 @@ body {
 
 .tableHeader,
 .tableBody,
-.taskRow {
+.taskRow,
+.loaderRow {
   text-align: start;
 
   border-collapse: separate;
@@ -119,9 +120,35 @@ body {
 }
 
 .taskStatus {
-  width: 15px;
-  height: 15px;
+  /* width: 15px; */
+  /* height: 15px; */
   margin-left: 8px;
-  border-radius: 50%;
-  background: green;
+  /* border-radius: 50%; */
+  /* background: #008000; */
+}
+
+.loader {
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader svg {
+  display: block;
+  margin: 0 auto;
+  animation: spin 2s linear infinite;
+}
+
+.hidden {
+  display: none;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

@@ -9,53 +9,39 @@
   <body>
     <div id="app">
       <h1 class="title">Emfy test task</h1>
-      <table class="table">
-        <thead class="tableHeader">
+
+      <div class="loader" id="loader">
+        <svg
+          viewBox="0 0 1024 1024"
+          focusable="false"
+          width="10em"
+          height="10em"
+          fill="#1677ff"
+          aria-hidden="true"
+        >
+          <path
+            d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z"
+          ></path>
+        </svg>
+      </div>
+
+      <table class="table hidden" id="dealsTable">
+        <thead class="tableHeader" id="tableHeader">
           <tr class="tableRow">
             <th class="tableHeading">Название</th>
             <th class="tableHeading">Бюджет</th>
             <th class="tableHeading">ID</th>
           </tr>
         </thead>
-        <tbody class="tableBody">
-          <tr class="dealRow">
-            <td class="dealData dealName">sds</td>
-            <td class="dealData dealBudget">sds</td>
-            <td class="dealData dealId">sds</td>
-          </tr>
-          <tr class="taskRow">
-            <td class="taskDetails" colspan="3">
-              <div class="taskContent">
-                <div class="taskLeft">
-                  <p class="taskText">
-                    Название: <span class="taskName"></span>
-                  </p>
-                  <p class="taskText">ID: <span class="taskId"></span></p>
-                </div>
-                <div class="taskRight">
-                  <p class="taskText">Дата: <span class="taskDate"></span></p>
-                  <p class="taskText">
-                    Статус:
-                    <svg class="taskStatus"></svg>
-                  </p>
-                </div>
-              </div>
-            </td>
-          </tr>
-          <tr class="dealRow">
-            <td class="dealData dealName">sds</td>
-            <td class="dealData dealBudget">sds</td>
-            <td class="dealData dealId">sds</td>
-          </tr>
-        </tbody>
+        <tbody class="tableBody"></tbody>
       </table>
     </div>
 
     <template id="dealTemplate">
       <tr class="dealRow">
-        <td class="dealName"></td>
-        <td class="dealBudget"></td>
-        <td class="dealId"></td>
+        <td class="dealData dealName"></td>
+        <td class="dealData dealBudget"></td>
+        <td class="dealData dealId"></td>
       </tr>
     </template>
 
@@ -64,20 +50,34 @@
         <td class="taskDetails" colspan="3">
           <div class="taskContent">
             <div class="taskLeft">
-              <p>Название: <span class="taskName"></span></p>
-              <p>ID: <span class="taskId"></span></p>
+              <p>Название сделки: <span class="taskName"></span></p>
+              <p>ID сделки: <span class="taskId"></span></p>
             </div>
             <div class="taskRight">
-              <p>Дата: <span class="taskDate"></span></p>
+              <p>Дата ближайшей задачи: <span class="taskDate"></span></p>
               <p>
-                Статус:
-                <svg class="taskStatus"></svg>
+                Статус ближайшей задачи:
+                <svg
+                  class="taskStatus"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 100 100"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle
+                    class="taskStatusCircle"
+                    cx="50"
+                    cy="50"
+                    r="50"
+                    fill="gray"
+                  ></circle>
+                </svg>
               </p>
             </div>
           </div>
         </td>
       </tr>
     </template>
-    <!-- <script type="module" src="/src/main.ts"></script> -->
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
