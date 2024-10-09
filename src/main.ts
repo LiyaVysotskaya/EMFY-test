@@ -2,7 +2,8 @@ import { getDealById, getDeals } from "./api/api.ts";
 import "./style.css";
 import { TDeal, TGeneralResponse } from "./types/apiTypes.ts";
 import { DEALS_LIMIT, DEALS_REQUEST_TIMEOUT } from "./utils/constants.ts";
-import { formatDate } from "./utils/converDateHelper.ts";
+import { getDateAsString } from "./utils/converDateHelper.ts";
+import { getStatusColor } from "./utils/getStatusColorHelper.ts";
 
 const fetchDeals = async () => {
   const deals: TDeal[] = [];
@@ -101,13 +102,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       const taskId = taskRow.querySelector(".taskId") as HTMLElement;
       const taskDate = taskRow.querySelector(".taskDate") as HTMLElement;
       const taskStatus = taskRow.querySelector(".taskStatus") as HTMLElement;
-
-      const date = formatDate(response.closest_task_at!).toString();
+      const taskStatusCircle = taskStatus.querySelector(
+        ".taskStatusCircle"
+      ) as HTMLElement;
 
       taskName.textContent = response.name;
       taskId.textContent = response.id.toString();
-      taskDate.textContent = date;
-      taskStatus.textContent = response.status_id.toString();
+      taskDate.textContent = getDateAsString(response.closest_task_at);
+      taskStatusCircle.style.fill = getStatusColor(response.closest_task_at);
 
       loaderRow.replaceWith(taskRow);
 

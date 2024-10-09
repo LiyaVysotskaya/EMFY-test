@@ -120,11 +120,11 @@ body {
 }
 
 .taskStatus {
-  width: 15px;
-  height: 15px;
+  /* width: 15px; */
+  /* height: 15px; */
   margin-left: 8px;
-  border-radius: 50%;
-  background: green;
+  /* border-radius: 50%; */
+  /* background: #008000; */
 }
 
 .loader {
