@@ -3,7 +3,7 @@ import { ACCESS_TOKEN, API_VERSION, BASE_URL, PROXY } from "../utils/constants";
 
 export const getDeals = async (limit: number, page: number) => {
   const response = await axios.get(
-    `${PROXY}${BASE_URL}${API_VERSION}/leads?limit=${limit}&page=${page}`,
+    `${PROXY}${BASE_URL}${API_VERSION}/leads?limit=${limit}&page=${page}&order[created_at]=asc`,
     {
       headers: {
         Authorization: `Bearer ${ACCESS_TOKEN}`,
